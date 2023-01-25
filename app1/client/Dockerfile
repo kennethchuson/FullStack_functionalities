@@ -1,20 +1,23 @@
+# Use Node.js v14 as the base image
 FROM node:14
 
-# Create app directory
-WORKDIR /app
+# Set the working directory
+WORKDIR /usr/src/app
 
-# Copy package.json and yarn.lock
-COPY package*.json yarn.lock ./
+# Copy the package.json and yarn.lock files
+COPY package.json yarn.lock ./
 
 # Install dependencies
 RUN yarn install
 
-# Copy application files
+# Copy the rest of the project files
 COPY . .
 
-# Build the app
+# Build the project
 RUN yarn build
 
-EXPOSE 5173
+# Start the development server
+CMD ["yarn", "dev"]
 
-CMD [ "yarn", "run", "dev" ]
+# Expose the development server port
+EXPOSE 5173
